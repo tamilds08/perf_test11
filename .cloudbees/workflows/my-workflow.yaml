@@ -27,24 +27,8 @@ jobs:
           CGO_ENABLED: "0"
 
   deploy:
-    needs: [build]
-    steps:
-      - name: Create Kubernetes Namespace
-        kind: deploy
-        uses: cloudbees-io/create-k8s-namespace@v1
-        with:
-          name: myapp-namespace
-          sanitize-name: true
-      
+    steps:      
       - name: Deploy to Kubernetes
         kind: deploy
         uses: cloudbees-io/helm-deploy@v1
-        with:
-          chart-location: ./charts/myapp
-          chart-version: 1.0.0
-          namespace: myapp-namespace
-          release-name: myapp-release
-          values: |
-            replicas: 2
-            image:
-              tag: latest
+        
